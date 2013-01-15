@@ -8,7 +8,7 @@ class Book(models.Model):
     '''
     uuid = models.CharField(primary_key=True, max_length=64, editable=False, default=uuid4)
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=500, blank=True)
+    description = models.TextField(max_length=500, blank=True)
     is_manuscript = models.BooleanField(default=False)
     printers = models.ManyToManyField('Printer')
     publication_date = models.DateField()
@@ -16,7 +16,10 @@ class Book(models.Model):
     printing_technology = models.ForeignKey('PrintingTechnology')
     genre = models.ManyToManyField('Genre')
     is_sacred = models.BooleanField(default=False)
-    alternate_id = models.OneToOneField('AlternateBookID', null=True)
+    alternate_id = models.OneToOneField('AlternateBookID', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
 
 class BookPart(models.Model):
     '''
@@ -30,6 +33,9 @@ class BookPart(models.Model):
     book = models.ForeignKey('Book')
     part_type = models.CharField(max_length=100)
 
+    def __unicode__(self):
+        return '%s [%s]' % (self.book.title, self.part_type)
+
 class Page(models.Model):
     '''
     Represents a page of music. This is a wrapper for an image of a page
@@ -38,11 +44,14 @@ class Page(models.Model):
 
     uuid = models.CharField(primary_key=True, max_length=64, editable=False, default=uuid4)
     book_part = models.ForeignKey('BookPart')
-    image = models.ImageField(upload_to='/images', width_field='image_width', height_field='image_height')
-    image_width = models.IntegerField()
-    image_height = models.IntegerField()
-    mei = models.FileField(upload_to='/mei')
+    image = models.ImageField(upload_to='images/', width_field='image_width', height_field='image_height')
+    image_width = models.IntegerField(editable=False)
+    image_height = models.IntegerField(editable=False)
+    mei = models.FileField(upload_to='mei/')
     sequence = models.IntegerField()
+
+    def __unicode__(self):
+        return '%s (p. %d)' % (self.book_part.book.title, self.sequence)
 
 class Printer(models.Model):
     '''
@@ -53,12 +62,18 @@ class Printer(models.Model):
 
     name = models.CharField(max_length=100)
 
+    def __unicode__(self):
+        return self.name
+
 class PrintingTechnology(models.Model):
     '''
     Technology used for printing the book.
     '''
 
     technology_type = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.technology_type
 
 class Genre(models.Model):
     '''
@@ -69,6 +84,9 @@ class Genre(models.Model):
     '''
 
     genre_name = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.genre_name
 
 class AlternateBookID(models.Model):
     '''
@@ -82,3 +100,6 @@ class AlternateBookID(models.Model):
 
     id = models.CharField(max_length=150, primary_key=True)
     id_type = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.id
