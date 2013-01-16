@@ -12,8 +12,11 @@ urlpatterns = patterns('',
     url(r'^$', 'gold.views.home', name='home'),
     url(r'^api/$', 'gold.views.api_root'),
     url(r'^books/$', views.BookList.as_view(), name='book-list'),
-    url(r'^books/(?P<pk>%s)/$' % uuid_regex, views.BookDetail.as_view(), name='book-detail'),
-    url(r'^pages/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    url(r'^books/(?P<pk>%s)/$' % uuid_regex, views.BookDetail.as_view()),
+    url(r'^bookparts/$', views.BookPartList.as_view(), name='book-part-list'),
+    url(r'^bookparts/(?P<pk>%s)/$' % uuid_regex, views.BookPartDetail.as_view()),
+    url(r'^pages/$', views.PageList.as_view(), name='page-list'),
+    url(r'^pages/(?P<pk>%s)/$' % uuid_regex, views.PageDetail.as_view()),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
     url(r'^admin/', include(admin.site.urls))
-
 )
