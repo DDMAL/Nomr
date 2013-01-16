@@ -9,4 +9,5 @@ Dependencies
 ------------
 
 * Django 1.4
+* Django REST framework 2.1
 * Python 2.7
