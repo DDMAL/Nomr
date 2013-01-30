@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from gold.models import Book, BookPart, Page
+from nomr.models import Book, BookPart, Page
 
 class BookSerializer(serializers.ModelSerializer):
     class Meta:

@@ -4,13 +4,13 @@ from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
-from gold import views
+from nomr import views
 
 uuid_regex = '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}'
 
 urlpatterns = patterns('',
-    url(r'^$', 'gold.views.home', name='home'),
-    url(r'^api/$', 'gold.views.api_root'),
+    url(r'^$', 'nomr.views.home', name='home'),
+    url(r'^api/$', 'nomr.views.api_root'),
     url(r'^books/$', views.BookList.as_view(), name='book-list'),
     url(r'^books/(?P<pk>%s)/$' % uuid_regex, views.BookDetail.as_view()),
     url(r'^bookparts/$', views.BookPartList.as_view(), name='book-part-list'),

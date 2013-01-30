@@ -5,8 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-from gold.models import Book, BookPart, Page
-from gold.serializers import BookSerializer, BookPartSerializer, PageSerializer
+from nomr.models import Book, BookPart, Page
+from nomr.serializers import BookSerializer, BookPartSerializer, PageSerializer
 
 def home(request):
     '''

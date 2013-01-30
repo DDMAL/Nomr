@@ -1,9 +1,9 @@
-GOLD
+NOMR
 ====
 
-Glyph OnLine Database. 
+Networked Optical Music Recognition. 
 
-A web service and interface for querying note glyphs for the purposes of training Optical Music Recognition (OMR) algorithms.
+A web service and interface for querying glyphs for the purposes of training Optical Music Recognition (OMR) algorithms.
 
 Dependencies
 ------------

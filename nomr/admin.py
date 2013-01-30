@@ -1,5 +1,5 @@
-from gold.models import Book, BookPart, Page
-from gold.models import Printer, PrintingTechnology, Genre, AlternateBookID
+from nomr.models import Book, BookPart, Page
+from nomr.models import Printer, PrintingTechnology, Genre, AlternateBookID
 from django.contrib import admin
 
 admin.site.register(Book)
