@@ -32,7 +32,7 @@
                             {% for location in locations %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="location" value="{{ location }}" /> {{ location }}
+                                        <input type="checkbox" name="location" id="location{{ forloop .counter }}" value="{{ location }}" /> {{ location }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -52,7 +52,7 @@
                             {% for genre in genres %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="genre" value="{{ genre }}" /> {{ genre }}
+                                        <input type="checkbox" name="genre" id="genre{{ forloop.counter }}" value="{{ genre }}" /> {{ genre }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -72,7 +72,7 @@
                             {% for printer in printers %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="printer" value="{{ printer }}" /> {{ printer }}
+                                        <input type="checkbox" name="printer" id="printer{{ forloop.counter }}" value="{{ printer }}" /> {{ printer }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -92,7 +92,7 @@
                             {% for pt in printing_technologies %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="printing_technology" value="{{ pt }}" /> {{ pt }}
+                                        <input type="checkbox" name="printing_technology" id="printing_technology{{ forloop.counter }}" value="{{ pt }}" /> {{ pt }}
                                     </label>
                                 </li>
                             {% endfor %}

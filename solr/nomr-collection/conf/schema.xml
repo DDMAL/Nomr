@@ -116,7 +116,15 @@
    <field name="is_sacred" type="boolean" indexed="true" stored="true" />
    <field name="alternate_id" type="string" indexed="true" stored="true" />
 
-    </fields>
+   <!-- General text search -->
+   <copyField source="uuid" dest="text"/>
+   <copyField source="title" dest="text"/>
+   <copyField source="printers" dest="text"/>
+   <copyField source="location" dest="text"/>
+   <copyField source="printing_technology" dest="text"/>
+   <copyField source="genre" dest="text"/>
+
+   </fields>
 
 
  <!-- Field to use to determine and enforce document uniqueness. 

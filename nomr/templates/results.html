@@ -8,7 +8,11 @@
 <div class="row-fluid">
     <div class="span12">
         <h1>Results</h1>
-        <p>Search results go here</p>
+        {% for res in results %}
+        <p>{{ res.title }}</p>
+        {% empty %}
+        <p>No results. Please refine your query.</p>
+        {% endfor %}
     </div>
 </div>
 

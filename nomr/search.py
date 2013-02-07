@@ -1,4 +1,7 @@
+from django.conf import settings
 from django.shortcuts import render
+import solr
+
 from nomr.models import Book, Printer, PrintingTechnology, Genre
 
 def search(request):
@@ -19,4 +22,19 @@ def _show_search(request):
     return render(request, 'search.html', data)
 
 def _show_results(request):
-    return render(request, 'results.html')
+    sanitized_q = u""
+
+    q = request.GET['q']
+    if q == u"":
+        sanitized_q = "*:*"
+    else:
+        sanitized_q = "text:%s" % q
+    
+    s_conn = solr.SolrConnection(settings.SOLR_SERVER)
+    response = s_conn.select(sanitized_q)
+
+    data = {
+        'results': response.results
+    }
+
+    return render(request, 'results.html', data)
