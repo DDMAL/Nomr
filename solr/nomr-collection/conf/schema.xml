@@ -112,7 +112,7 @@
    <field name="publication_date" type="date" indexed="true" stored="true" />
    <field name="location" type="string" indexed="true" stored="true" />
    <field name="printing_technology" type="string" indexed="true" stored="true" />
-   <field name="genre" type="string" indexed="true" stored="true" multiValued="true" />
+   <field name="genres" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="is_sacred" type="boolean" indexed="true" stored="true" />
    <field name="alternate_id" type="string" indexed="true" stored="true" />
 
@@ -122,7 +122,7 @@
    <copyField source="printers" dest="text"/>
    <copyField source="location" dest="text"/>
    <copyField source="printing_technology" dest="text"/>
-   <copyField source="genre" dest="text"/>
+   <copyField source="genres" dest="text"/>
 
    </fields>
 

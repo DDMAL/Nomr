@@ -19,6 +19,7 @@
     <div class="span4">
         <div class="well">
             <div class="nav-header well-title">Filters</div>
+            <form id="search-form" class="form-search" action="/search" method="get">
             <div class="accordion" id="facets">
                 <div class="accordion-group">
                     <div class="accordion-heading">
@@ -32,7 +33,7 @@
                             {% for location in locations %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="location" id="location{{ forloop.counter }}" value="{{ location }}" /> {{ location }}
+                                        <input type="checkbox" name="fq" id="location_{{ forloop.counter }}" value="location:{{ location }}" /> {{ location }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -52,7 +53,7 @@
                             {% for genre in genres %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="genre" id="genre{{ forloop.counter }}" value="{{ genre }}" /> {{ genre }}
+                                        <input type="checkbox" name="fq" id="genre_{{ forloop.counter }}" value="genres:{{ genre }}" /> {{ genre }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -72,7 +73,7 @@
                             {% for printer in printers %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="printer" id="printer{{ forloop.counter }}" value="{{ printer }}" /> {{ printer }}
+                                        <input type="checkbox" name="fq" id="printer_{{ forloop.counter }}" value="printers:{{ printer }}" /> {{ printer }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -92,7 +93,7 @@
                             {% for pt in printing_technologies %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="printing_technology" id="printing_technology{{ forloop.counter }}" value="{{ pt }}" /> {{ pt }}
+                                        <input type="checkbox" name="fq" id="printing_technology_{{ forloop.counter }}" value="printing_technology:{{ pt }}" /> {{ pt }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -108,8 +109,10 @@
                     </div>
                     <div id="publication_date" class="accordion-body collapse">
                         <div class="accordion-inner">
-                            <label for="start-date">Start Date </label><input type="date" id="start-date" min="1450-01-01" max="2013-01-01" />
-                            <label for="end-date">End Date </label><input type="date" id="end-date" min="1450-01-01" max="2013-01-01" />
+                            <label for="start-date">Start Date</label><br />
+                            <input type="date" id="start-date" min="1400-01-01" max="2013-01-01" /><br />
+                            <label for="end-date">End Date</label><br />
+                            <input type="date" id="end-date" min="1400-01-01" max="2013-01-01" />
                         </div>
                     </div>
                 </div>
@@ -117,8 +120,7 @@
         </div>
     </div>
     <div class="span8">
-        <h1>Search</h1>
-        <form id="search-form" class="form-search" action="/search" method="get">
+        <h1>Glyph Search</h1>
             <input type="text" name="q" class="input-medium search-query">
             <button id="search-submit" type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
             <button type="reset" class="btn">Clear</button>

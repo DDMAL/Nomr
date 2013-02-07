@@ -25,16 +25,27 @@ def _show_results(request):
     sanitized_q = u""
 
     q = request.GET['q']
-    if q == u"":
+    if not q:
         sanitized_q = "*:*"
     else:
+        # perform search on general text field (concatenation of all fields)
         sanitized_q = "text:%s" % q
     
+    # get facet queries
+    fq = request.GET.getlist('fq')
+
     s_conn = solr.SolrConnection(settings.SOLR_SERVER)
-    response = s_conn.select(sanitized_q)
+    response = s_conn.select(
+        sanitized_q,
+        fq=fq,
+        facet='true',
+        facet_field=['location', 'genres', 'printers', 'printing_technology'],
+        facet_mincount=1
+    )
 
     data = {
-        'results': response.results
+        'results': response.results,
+        'facets': response.facet_counts['facet_fields']
     }
 
     return render(request, 'results.html', data)

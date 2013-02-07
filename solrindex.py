@@ -33,7 +33,7 @@ if __name__ == "__main__":
             'publication_date': b.publication_date,
             'location': b.location,
             'printing_technology': b.printing_technology.technology_type,
-            'genre': [g.genre_name for g in b.genre.all()],
+            'genres': [g.genre_name for g in b.genre.all()],
             'is_sacred': b.is_sacred,
         }
 
