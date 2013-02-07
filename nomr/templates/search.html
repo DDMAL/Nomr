@@ -32,7 +32,7 @@
                             {% for location in locations %}
                                 <li>
                                     <label class="checkbox">
-                                        <input type="checkbox" name="location" id="location{{ forloop .counter }}" value="{{ location }}" /> {{ location }}
+                                        <input type="checkbox" name="location" id="location{{ forloop.counter }}" value="{{ location }}" /> {{ location }}
                                     </label>
                                 </li>
                             {% endfor %}
