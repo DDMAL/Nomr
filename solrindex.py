@@ -28,13 +28,11 @@ if __name__ == "__main__":
             'uuid': b.uuid,
             'title': b.title,
             'description': b.description,
-            'is_manuscript': b.is_manuscript,
             'printers': [p.name for p in b.printers.all()],
             'publication_date': b.publication_date,
             'location': b.location,
             'printing_technology': b.printing_technology.technology_type,
             'genres': [g.genre_name for g in b.genre.all()],
-            'is_sacred': b.is_sacred,
         }
 
         if b.alternate_id:

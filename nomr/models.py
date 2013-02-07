@@ -9,13 +9,11 @@ class Book(models.Model):
     uuid = models.CharField(primary_key=True, max_length=64, editable=False, default=uuid4)
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=500, blank=True)
-    is_manuscript = models.BooleanField(default=False)
     printers = models.ManyToManyField('Printer')
     publication_date = models.DateField()
     location = models.CharField(max_length=100)
     printing_technology = models.ForeignKey('PrintingTechnology')
     genre = models.ManyToManyField('Genre')
-    is_sacred = models.BooleanField(default=False)
     alternate_id = models.OneToOneField('AlternateBookID', null=True, blank=True)
 
     def __unicode__(self):

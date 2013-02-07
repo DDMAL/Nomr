@@ -8,13 +8,11 @@ class BookSerializer(serializers.ModelSerializer):
             'uuid',
             'title',
             'description',
-            'is_manuscript',
             'printers',
             'publication_date',
             'location',
             'printing_technology',
             'genre',
-            'is_sacred',
             'alternate_id'
         )
 

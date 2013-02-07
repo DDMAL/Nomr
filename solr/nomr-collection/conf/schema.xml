@@ -107,13 +107,11 @@
    <field name="title" type="string" indexed="true" stored="true" />
    <!-- don't search description, but display in the search results -->
    <field name="description" type="text_general" indexed="false" stored="true" />
-   <field name="is_manuscript" type="boolean" indexed="true" stored="true" />
    <field name="printers" type="string" indexed="true" stored="true" multiValued="true" />
    <field name="publication_date" type="date" indexed="true" stored="true" />
    <field name="location" type="string" indexed="true" stored="true" />
    <field name="printing_technology" type="string" indexed="true" stored="true" />
    <field name="genres" type="string" indexed="true" stored="true" multiValued="true" />
-   <field name="is_sacred" type="boolean" indexed="true" stored="true" />
    <field name="alternate_id" type="string" indexed="true" stored="true" />
 
    <!-- General text search -->
