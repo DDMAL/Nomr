@@ -9,13 +9,8 @@
 
         <!-- Le styles -->
         <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-        </style>
         <link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
         {% block css_includes %}{% endblock %}
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -39,15 +34,10 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="#">Nomr</a>
-                    <div class="nav-collapse collapse">
-                        <p class="navbar-text pull-right"><a href="#developersModal" data-toggle="modal">Developers</a> | <a href="http://ddmal.music.mcgill.ca/">DDMAL</a></p>
-                    </div><!--/.nav-collapse -->
+                    <a class="brand" href="/">Nomr</a>
+                    <div class="pull-right">
+                        <p class="navbar-text"><a href="#developersModal" data-toggle="modal">Developers</a> | <a href="http://ddmal.music.mcgill.ca/">DDMAL</a></p>
+                    </div>
                 </div>
             </div>
         </div>
