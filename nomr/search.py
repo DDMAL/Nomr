@@ -11,12 +11,16 @@ def search(request):
         return _show_results(request)
 
 def _show_search(request):
+    pub_dates = [b.publication_date for b in Book.objects.all()]
+
     # generate facet data
     data = {
         'printers': sorted([p.name for p in Printer.objects.all()]),
         'printing_technologies': sorted([pt.technology_type for pt in PrintingTechnology.objects.all()]),
         'locations': sorted([b.location for b in Book.objects.all()]),
-        'genres': sorted([g.genre_name for g in Genre.objects.all()])
+        'genres': sorted([g.genre_name for g in Genre.objects.all()]),
+        'min_publication_date': min(pub_dates).isoformat(),
+        'max_publication_date': max(pub_dates).isoformat()
     }
 
     return render(request, 'search.html', data)
@@ -34,6 +38,12 @@ def _show_results(request):
     # get facet queries
     fq = request.GET.getlist('fq')
 
+
+    start_date = request.GET.get('startdate')
+    end_date = request.GET.get('enddate')
+    if start_date and end_date:
+        sanitized_q += (' AND publication_date:[%sT00:00:00.000Z TO %sT00:00:00.000Z]' % (start_date, end_date))
+
     s_conn = solr.SolrConnection(settings.SOLR_SERVER)
     response = s_conn.select(
         sanitized_q,
@@ -45,7 +55,7 @@ def _show_results(request):
 
     data = {
         'results': response.results,
-        'facets': response.facet_counts['facet_fields']
+        'facets': response.facet_counts['facet_fields'],
     }
 
     return render(request, 'results.html', data)
