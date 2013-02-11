@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load bootstrap_pagination %}
+
 {% block title %} Results {% endblock %}
 
 {% block js_includes %}
@@ -178,11 +180,17 @@
     </div>
     <div class="span8">
         <h1>Results</h1>
-        {% for res in results %}
+        {% for res in paged_results.object_list %}
         <p>{{ res.title }}</p>
         {% empty %}
         <p>No results. Please <a href='/search'>refine your query</a>.</p>
         {% endfor %}
+
+        {% if paged_results.object_list %}
+        {% bootstrap_paginate paged_results %}
+
+        <p><i class="icon-exclamation-sign"></i> Not what you're looking for? <a href='/search'>Search again</a>.</p>
+        {% endif %}
     </div>
 </div>
 

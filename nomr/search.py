@@ -1,8 +1,11 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+from django.core.paginator import EmptyPage
 import solr
 
 from nomr.models import Book, Printer, PrintingTechnology, Genre
+from nomr.resources.solrpaginate import SolrPaginator, SolrPage
 
 def search(request):
     if 'q' not in request.GET:
@@ -23,7 +26,7 @@ def _show_search(request):
         'max_publication_date': max(pub_dates).isoformat()
     }
 
-    return render(request, 'search.html', data)
+    return render_to_response('search.html', data, context_instance=RequestContext(request))
 
 def _show_results(request):
     sanitized_q = u""
@@ -50,12 +53,28 @@ def _show_results(request):
         fq=fq,
         facet='true',
         facet_field=['location', 'genres', 'printers', 'printing_technology'],
-        facet_mincount=1
+        facet_mincount=1,
+        rows=settings.SOLR_PAGE_SIZE
     )
 
+    try:
+        # get page number
+        page_num = int(request.GET.get('page', 1))
+    except ValueError:
+        page_num = 1
+
+    # default page size is set to rows=settings.SOLR_PAGE_SIZE
+    paginator = SolrPaginator(response)
+
+    try:
+        page = paginator.page(page_num)
+    except EmptyPage:
+        # generate an empty page, i.e., one with no results to display
+        page = SolrPage([], 1, paginator)
+
     data = {
-        'results': response.results,
+        'paged_results': page,
         'facets': response.facet_counts['facet_fields'],
     }
 
-    return render(request, 'results.html', data)
+    return render_to_response('results.html', data, context_instance=RequestContext(request))
