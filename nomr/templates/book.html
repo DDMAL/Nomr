@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} Book {% endblock %}
+
+<script type="text/javascript">
+    $('document').ready(function() {
+        $('#bookCarousel').carousel({
+            interval: 2000
+        });
+    });
+</script>
+
+{% block content %}
+
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="row-fluid">
+    <div class="span12">
+        <h1>{{ book.title }}</h1>
+
+        <!-- TODO: integrate diva.js to show the book contents -->
+        <table class="table table-striped table-hover">
+            <tbody>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ book.description }}</td>
+                </tr>
+                <tr>
+                    <th>Printers</th>
+                    <td>{{ book.printers }}</td>
+                </tr>
+                <tr>
+                    <th>Publication Date</th>
+                    <td>{{ book.publication_date }}</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>{{ book.location}}</td>
+                </tr>
+                <tr>
+                    <th>Printing Technology</th>
+                    <td>{{ book.printing_technology }}</td>
+                </tr>
+                <tr>
+                    <th>Genres</th>
+                    <td>{{ book.genres }}</td>
+                </tr>
+                {% if book.alternate_id %}
+                <tr>
+                    <th>Alternate ID</th>
+                    <td>{{ book.alternate_id }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -8,6 +8,9 @@
         $('.accordion-toggle').on('click', function(e) {
             $(this).find('i').toggleClass('icon-chevron-up icon-chevron-down');
         });
+        
+        // affix facet sidebar
+        $('#side-bar').affix();
     });
 </script>
 {% endblock %}
@@ -17,7 +20,7 @@
 <!-- Main hero unit for a primary marketing message or call to action -->
 <div class="row-fluid">
     <div class="span4">
-        <div class="well">
+        <div id="side-bar" class="well">
             <div class="nav-header well-title">Filters</div>
             <form id="search-form" class="form-search" action="/search" method="get">
             <div class="accordion" id="facets">
