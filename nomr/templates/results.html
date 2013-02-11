@@ -96,6 +96,7 @@
 
 <!-- Main hero unit for a primary marketing message or call to action -->
 <div class="row-fluid">
+    {% if paged_results.object_list %}
     <div class="span4">
         <div id="side-bar" class="well">
             <div class="nav-header well-title">Filters</div>
@@ -186,7 +187,6 @@
     </div>
     <div class="span8">
         <h1>Results</h1>
-        {% if paged_results.object_list %}
         <button id="glyph_gen" title="Generate glyphs for the books in the search results." class="btn btn-info">Generate Glyphs</button>
         <hr />
 
@@ -209,10 +209,13 @@
         {% bootstrap_paginate paged_results %}
 
         <p><i class="icon-exclamation-sign"></i> Not what you're looking for? <a href='/search'>Expand your search</a>.</p>
-        {% else %}
-        <p>No results. Please <a href='/search'>refine your query</a>.</p>
-        {% endif %}
     </div>
+    {% else %}
+    <div class="span12">
+        <h1>Results</h1>
+        <p>No results. Please <a href='/search'>refine your query</a>.</p>
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}
