@@ -9,26 +9,42 @@
      * to permit parameters with the same name.
      */
     $('document').ready(function() {
-        $("input[type=checkbox]").on("click", function(e) {
-            // When a facet checkbox is clicked, append the 
-            console.log(this);
+        function checkFacets() {
+            // check facet fields that are currently filtering the search query
+            var queryString = location.search.substring(1);
+            var re = /([^&=]+)=([^&]*)/g;
+            var m;
+                 
+            while (m = re.exec(queryString)) {
+                key = decodeURIComponent(m[1]);
+                if (key == 'fq') {
+                    // this is a facet filter
+                    // decode the value (decodeURIComponent function leaves in + for spaces)
+                    value = decodeURIComponent(m[2]).replace(/\+/g,' ');
+                    // search for this checkbox in the DOM and check it
+                    $("input[type='checkbox'][value='"+value+"']").prop('checked', true);
+                }
+            }
+        }
 
+        checkFacets();
+
+        $("input[type=checkbox]").on("change", function(e) {
             /*
              * queryParameters -> handles the query string parameters
              * queryString -> the query string without the fist '?' character
              * re -> the regular expression
              * m -> holds the string matching the regular expression
              */
-            var queryParameters = {};
+
+            var queryParameters = new Array();
             var queryString = location.search.substring(1);
             var re = /([^&=]+)=([^&]*)/g;
             var m;
              
-            // Creates a map with the query string parameters
-            var getVars = new Array();
             while (m = re.exec(queryString)) {
                 key = decodeURIComponent(m[1]);
-                value = decodeURIComponent(m[2]);
+                value = decodeURIComponent(m[2]).replace(/\+/g,' ');
 
                 // Skip empty date field values
                 if (key == 'startdate' && value == '') {
@@ -38,18 +54,31 @@
                     continue;
                 }
 
-                getVars.push({name: key, value: value});
+                queryParameters.push({name: key, value: value});
             }
-            
-            // append new facet value to query string
-            getVars.push({name: $(this).attr('name'), value: $(this).attr('value')});
+
+            // modify query parameters
+            checkVal = $(this).attr('value');
+            var addFacet = $(this).is(':checked');
+
+            for (var i = queryParameters.length-1; i >= 0; i--) {
+                if (queryParameters[i].value == checkVal) {
+                    // remove the facet filter
+                    // if the facet should be added, this will remove all of the duplicates
+                    queryParameters.splice(i,1);
+                }
+            }
+
+            if (addFacet) {
+                queryParameters.push({name: $(this).attr('name'), value: $(this).attr('value')});
+            }
 
             /*
              * Replace the query portion of the URL.
              * jQuery.param() -> create a serialized representation of an array or
              *     object, suitable for use in a URL query string or Ajax request.
              */
-            location.search = $.param(getVars); // Causes page to reload
+            location.search = $.param(queryParameters); // Causes page to reload
         });
     });
 </script>
@@ -152,34 +181,9 @@
         {% for res in results %}
         <p>{{ res.title }}</p>
         {% empty %}
-        <p>No results. Please refine your query.</p>
+        <p>No results. Please <a href='/search'>refine your query</a>.</p>
         {% endfor %}
     </div>
 </div>
 
 {% endblock %}
-
-
-            {% for facet, entries in facets.items %}
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#facets" href="#{{ facet }}">
-                            {{ facet }}<span class="pull-right"><i class="icon-chevron-down icon-white"></i></span>
-                        </a>
-                    </div>
-                    <div id="{{ facet }}" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-                            <ul class="column-checklist">
-                            {% for entry, cardinality in entries.items %}
-                                <li>
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="fq" id="{{ facet }}_{{ forloop.counter }}" value="{{ facet }}:{{ entry }}" /> {{ entry }} ({{ cardinality }})
-                                    </label>
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-
