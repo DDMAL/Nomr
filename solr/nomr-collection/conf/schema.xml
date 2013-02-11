@@ -121,6 +121,7 @@
    <copyField source="location" dest="text"/>
    <copyField source="printing_technology" dest="text"/>
    <copyField source="genres" dest="text"/>
+   <copyField source="alternate_id" dest="text"/>
 
    </fields>
 
