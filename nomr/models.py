@@ -1,5 +1,7 @@
 from django.db import models
-from imagekit.models import ProcessedImageField
+from django.conf import settings
+from imagekit.models import ProcessedImageField, ImageSpecField
+from imagekit.processors import ResizeToFit
 
 from uuid import uuid4
 
@@ -44,8 +46,22 @@ class Page(models.Model):
 
     uuid = models.CharField(primary_key=True, max_length=64, editable=False, default=uuid4)
     book_part = models.ForeignKey('BookPart')
-    image = ProcessedImageField(upload_to='images/', format='PNG', width_field='image_width', height_field='image_height')
-    #image = models.ImageField(upload_to='images/', width_field='image_width', height_field='image_height')
+    image = ProcessedImageField(
+        upload_to='images/',
+        format='PNG',
+        width_field='image_width',
+        height_field='image_height'
+    )
+    small_image_thumbnail = ImageSpecField(
+        image_field='image',
+        processors=[ResizeToFit(width=settings.SMALL_THUMBNAIL_WIDTH)],
+        format='PNG'
+    )
+    medium_image_thumbnail = ImageSpecField(
+        image_field='image',
+        processors=[ResizeToFit(width=settings.MEDIUM_THUMBNAIL_WIDTH)],
+        format='PNG'
+    )
     image_width = models.IntegerField(editable=False)
     image_height = models.IntegerField(editable=False)
     mei = models.FileField(upload_to='mei/')
