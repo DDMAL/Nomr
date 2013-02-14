@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} Glyphs {% endblock %}
+
+{% block content %}
+
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="row-fluid">
+    <div class="span12">
+        <h1>Glyphs</h1>
+        <button class="btn btn-info">Download collection</button>
+        <hr />
+
+        <ul class="thumbnails">
+        {% for glyph_url in glyphs %}
+            <li class="span2">
+                <div class="thumbnail">
+                    <img style="height:25px;" src="{{ glyph_url }}">
+                    <h5 class="glyph-name">Name</h5>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

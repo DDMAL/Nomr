@@ -88,6 +88,14 @@
 
         // affix facet sidebar
         $('#side-bar').affix();
+
+        // attach handler to glyph generation button
+        $('#glyph_gen').on("click", function(e) {
+            queryString = location.search;
+            path = "glyphs/" + queryString;
+            window.location = "/glyphs/" + queryString;
+            return false;
+        });
     });
 </script>
 {% endblock %}

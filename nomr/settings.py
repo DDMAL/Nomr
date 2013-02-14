@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'nomr',
     'rest_framework',
+    'imagekit',
     'bootstrap-pagination',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

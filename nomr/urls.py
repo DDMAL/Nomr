@@ -25,3 +25,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('nomr.search',
     url(r'^search/$', 'search', name="search")
 )
+
+urlpatterns += patterns('nomr.glyphs',
+    url(r'^glyphs/$', 'glyphs', name='glyphs')
+)

@@ -8,7 +8,7 @@ from nomr.models import Book, Printer, PrintingTechnology, Genre
 from nomr.resources.solrpaginate import SolrPaginator, SolrPage
 
 def search(request):
-    if 'q' not in request.GET:
+    if 'q' not in request.GET and 'fq' not in request.GET:
         return _show_search(request)
     else:
         return _show_results(request)
@@ -31,7 +31,7 @@ def _show_search(request):
 def _show_results(request):
     sanitized_q = u""
 
-    q = request.GET['q']
+    q = request.GET.get('q')
     if not q:
         sanitized_q = "*:*"
     else:
@@ -40,7 +40,6 @@ def _show_results(request):
     
     # get facet queries
     fq = request.GET.getlist('fq')
-
 
     start_date = request.GET.get('startdate')
     end_date = request.GET.get('enddate')
